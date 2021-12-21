@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  become: yes
   vars_files: secret.yml
   tasks:
    - name: apt-update
@@ -11,13 +10,11 @@
       name: docker.io
       state: present
    - name: Create new directory
-     become_user: ubuntu
      file:
       path: /home/ubuntu/target
       state: directory
    - name: Copy the source code to hosts
      copy: src=./{{ item }} dest=/home/ubuntu/target/
-     become_user: ubuntu
      with_items:
         - app
         - migrations
